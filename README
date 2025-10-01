@@ -1,0 +1,14 @@
+Dump Data Base
+
+CREATE SCHEMA university;
+
+CREATE TABLE university.carreras(
+	idCarrera INT NOT NULL AUTO_INCREMENT,
+    nombre varchar(45),
+    constraint PK_Carreras primary key (idCarrera)
+);
+
+INSERT INTO university.carreras (nombre) values
+('UAB'),
+('UPC'),
+('UPF');
