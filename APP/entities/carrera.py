@@ -1,8 +1,12 @@
 class Carrera:
-    def __init__(self, nombre):
-        self.setNombre(nombre)
+    def __init__(self, nombre, idCarrera=None):
+        self.__idCarrera = idCarrera
+        self.SetNombre(nombre)
 
-    def getNombre(self):
+    def GetNombre(self):
         return self.__nombre
-    def setNombre(self, nombre):
+    def SetNombre(self, nombre):
         self.__nombre = nombre
+    def GetIdCarrera(self):
+        return self.__idCarrera
+    
