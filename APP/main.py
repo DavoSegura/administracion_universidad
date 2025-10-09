@@ -6,13 +6,11 @@ menu = "\n1.- Insert\n2.- Select\n3.- Update\n4.- Delete\n5.- Select by ID\n0.- 
 
 correct_password = False
 while correct_password == False:
-    password = input("Introduce la contraseña a la Base de Datos: ")
-    db.init_connection(password)
+    db.init_connection()
     if db.connection:
         correct_password = True
         print("¡Conexión establecida!")
 
-# service_carreras = CarreraDao(connection)
 service_carreras = CarreraService() 
 run_app = True
 

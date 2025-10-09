@@ -11,6 +11,7 @@ class CarreraDao:
         values = (carrera.GetNombre(),)
         mycursor.execute(sql, values)
         self.__connection.commit()
+        return (f"Se han añadido {mycursor.rowcount} valores")
 
     def select(self):
         mycursor = self.__connection.cursor()
@@ -32,6 +33,7 @@ class CarreraDao:
         values = (carrera.GetNombre(), carrera.GetIdCarrera())
         mycursor.execute(sql, values)
         self.__connection.commit()
+        return (f"Se han modificado {mycursor.rowcount} valores")
 
     def delete_by_id(self, id):
         mycursor = self.__connection.cursor()
@@ -39,4 +41,4 @@ class CarreraDao:
         values = (id,)
         mycursor.execute(sql, values)
         self.__connection.commit()
-        return mycursor.rowcount
+        return (f"Se han eliminado {mycursor.rowcount} valores")
