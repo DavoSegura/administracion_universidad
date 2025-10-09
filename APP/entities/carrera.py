@@ -9,4 +9,3 @@ class Carrera:
         self.__nombre = nombre
     def GetIdCarrera(self):
         return self.__idCarrera
-
