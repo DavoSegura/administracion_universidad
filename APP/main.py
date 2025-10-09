@@ -1,6 +1,6 @@
-from dao.carreraDAO import *
+from entities.carrera import Carrera
 from config.connection import create_connection
-from services.carreraService import CarreraService
+from server.carreraService import CarreraService
 
 menu = "\n1.- Insert\n2.- Select\n3.- Update\n4.- Delete\n0.- Exit"
 
@@ -26,21 +26,21 @@ while run_app == True:
         while nombre_carrera == "":
             nombre_carrera = input("Introduce el nombre de la carrera: ")
         carrera = Carrera(nombre=nombre_carrera)
-        service_carreras.insert(carrera)
+        service_carreras.CreateCarrera(carrera)
 
     elif option == "2": 
-        select_all_carreras = service_carreras.select()
+        select_all_carreras = service_carreras.GetCarreras()
         print(select_all_carreras)
 
     elif option == "3":
         idCarrera = int(input("Introduce el ID de la carrera que quiere actualizar: "))
         nombre = input("Introduce el nombre de la carrera actualizado: ")
         carrera = Carrera(idCarrera=idCarrera, nombre=nombre)
-        service_carreras.update_by_id(carrera)
+        service_carreras.UpdateCarrera(carrera)
 
     elif option == "4":
         idCarrera = int(input("Introduce el ID de la carrera que quiere eliminar: "))
-        service_carreras.delete_by_id(idCarrera)
+        service_carreras.DeleteCarrera(idCarrera)
     elif option == "0":
         run_app = False
     else:

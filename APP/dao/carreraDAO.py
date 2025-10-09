@@ -20,7 +20,7 @@ class CarreraDao:
             result_text += f"idCarrera: {row[0]}, nombre: {row[1]}\n"
         return result_text
 
-    def update_by_id(self, carrera):
+    def update(self, carrera):
         mycursor = self.__connection.cursor()
         sql = "UPDATE carreras SET nombre = %s WHERE idCarrera = %s"
         values = (carrera.GetNombre(), carrera.GetIdCarrera())
