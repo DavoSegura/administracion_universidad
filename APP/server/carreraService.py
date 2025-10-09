@@ -7,8 +7,11 @@ class CarreraService:
     def GetCarreras(self):
         return self.__carreraDAO.select()
 
-    # def GetCarreraById(self, idCarrera):
-    #     return self.__carreraDAO.GetCarreraById(idCarrera)
+    def GetCarreraById(self, idCarrera):
+        carrera = self.__carreraDAO.select_by_id(idCarrera)
+        if carrera is None:
+            return f"No se encontró la carrera con ID {idCarrera}."
+        return self.__carreraDAO.select_by_id(idCarrera)
 
     def CreateCarrera(self, carrera):
         return self.__carreraDAO.insert(carrera)

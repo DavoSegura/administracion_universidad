@@ -19,6 +19,11 @@ class CarreraDao:
         for row in myresult:
             result_text += f"idCarrera: {row[0]}, nombre: {row[1]}\n"
         return result_text
+    
+    def select_by_id(self, id):
+        mycursor = self.__connection.cursor()
+        mycursor.execute(("SELECT idCarrera, nombre FROM carreras WHERE idCarrera = %s"), (id,))
+        return mycursor.fetchone()
 
     def update(self, carrera):
         mycursor = self.__connection.cursor()

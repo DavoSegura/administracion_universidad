@@ -2,7 +2,7 @@ from entities.carrera import Carrera
 from config.connection import create_connection
 from server.carreraService import CarreraService
 
-menu = "\n1.- Insert\n2.- Select\n3.- Update\n4.- Delete\n0.- Exit"
+menu = "\n1.- Insert\n2.- Select\n3.- Update\n4.- Delete\n5.- Select by ID\n0.- Exit"
 
 correct_password = False
 while correct_password == False:
@@ -41,6 +41,10 @@ while run_app == True:
     elif option == "4":
         idCarrera = int(input("Introduce el ID de la carrera que quiere eliminar: "))
         service_carreras.DeleteCarrera(idCarrera)
+
+    elif option == "5":
+        idCarrera = int(input("Introduce el ID de la carrera que quiere encontrar: "))
+        print(service_carreras.GetCarreraById(idCarrera))
     elif option == "0":
         run_app = False
     else:
