@@ -1,8 +1,11 @@
 from dao.carreraDAO import *
+from flask import Flask, jsonify, request as req
+
+app = Flask(__name__)
 
 class CarreraService:
-    def __init__(self, connection):
-        self.__carreraDAO = CarreraDao(connection)
+    def __init__(self):
+        self.__carreraDAO = CarreraDao()
 
     def GetCarreras(self):
         return self.__carreraDAO.select()
@@ -21,4 +24,3 @@ class CarreraService:
 
     def DeleteCarrera(self, idCarrera):
         return self.__carreraDAO.delete_by_id(idCarrera)   
-    

@@ -1,8 +1,9 @@
 from entities.carrera import Carrera
+import config.db_global as db
 
 class CarreraDao:
-    def __init__(self, connection):
-        self.__connection = connection
+    def __init__(self):
+        self.__connection = db.connection
 
     def insert(self, carrera):
         mycursor = self.__connection.cursor()

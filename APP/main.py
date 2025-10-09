@@ -1,5 +1,5 @@
 from entities.carrera import Carrera
-from config.connection import create_connection
+import config.db_global as db
 from server.carreraService import CarreraService
 
 menu = "\n1.- Insert\n2.- Select\n3.- Update\n4.- Delete\n5.- Select by ID\n0.- Exit"
@@ -7,13 +7,13 @@ menu = "\n1.- Insert\n2.- Select\n3.- Update\n4.- Delete\n5.- Select by ID\n0.- 
 correct_password = False
 while correct_password == False:
     password = input("Introduce la contraseña a la Base de Datos: ")
-    connection = create_connection(password)
-    if connection != None:
+    db.init_connection(password)
+    if db.connection:
         correct_password = True
         print("¡Conexión establecida!")
 
 # service_carreras = CarreraDao(connection)
-service_carreras = CarreraService(connection) 
+service_carreras = CarreraService() 
 run_app = True
 
 while run_app == True:
