@@ -1,17 +1,17 @@
-from dao.carreraDAO import *
-from config.connection import create_connection
+from entities.carrera import Carrera
+import config.db_global as db
+from server.carreraService import CarreraService
 
-menu = "\n1.- Insert\n2.- Select\n3.- Update\n4.- Delete\n0.- Exit"
+menu = "\n1.- Insert\n2.- Select\n3.- Update\n4.- Delete\n5.- Select by ID\n0.- Exit"
 
 correct_password = False
 while correct_password == False:
-    password = input("Introduce la contraseña a la Base de Datos: ")
-    connection = create_connection(password)
-    if connection != None:
+    db.init_connection()
+    if db.connection:
         correct_password = True
         print("¡Conexión establecida!")
 
-daoCarreras = CarreraDao(connection)
+service_carreras = CarreraService() 
 run_app = True
 
 while run_app == True:
@@ -24,21 +24,25 @@ while run_app == True:
         while nombre_carrera == "":
             nombre_carrera = input("Introduce el nombre de la carrera: ")
         carrera = Carrera(nombre=nombre_carrera)
-        daoCarreras.insert(carrera)
+        service_carreras.CreateCarrera(carrera)
 
     elif option == "2": 
-        select_all_carreras = daoCarreras.select()
+        select_all_carreras = service_carreras.GetCarreras()
         print(select_all_carreras)
 
     elif option == "3":
         idCarrera = int(input("Introduce el ID de la carrera que quiere actualizar: "))
         nombre = input("Introduce el nombre de la carrera actualizado: ")
         carrera = Carrera(idCarrera=idCarrera, nombre=nombre)
-        daoCarreras.update_by_id(carrera)
+        service_carreras.UpdateCarrera(carrera)
 
     elif option == "4":
         idCarrera = int(input("Introduce el ID de la carrera que quiere eliminar: "))
-        daoCarreras.delete_by_id(idCarrera)
+        service_carreras.DeleteCarrera(idCarrera)
+
+    elif option == "5":
+        idCarrera = int(input("Introduce el ID de la carrera que quiere encontrar: "))
+        print(service_carreras.GetCarreraById(idCarrera))
     elif option == "0":
         run_app = False
     else:
