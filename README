@@ -49,24 +49,11 @@ pip install flask mysql-connector-python
 
 ### Web
 ```bash
-python -m flask --app APP.api run
+python -m flask --app APP.api.api run
 ```
 ### Consola
 ```bash
 python APP/main.py
 ```
 ## 🗄️ Creación del schema
-```bash
-CREATE SCHEMA university;
-
-CREATE TABLE university.carreras(
-	idCarrera INT NOT NULL AUTO_INCREMENT,
-    nombre varchar(45),
-    constraint PK_Carreras primary key (idCarrera)
-);
-
-INSERT INTO university.carreras (nombre) values
-('Ingeniería Informática'),
-('Administración de Empresas'),
-('Derecho');
-```
+Puedes encontrar la base de datos en la carpeta BD con los diagramas informativos.
