@@ -1,5 +1,5 @@
 from entities.carrera import Carrera
-import config.db_global as db
+import config.connection as db
 
 class CarreraDao:
     def __init__(self):
@@ -17,10 +17,7 @@ class CarreraDao:
         mycursor = self.__connection.cursor()
         mycursor.execute("SELECT idCarrera, nombre FROM carreras")
         myresult = mycursor.fetchall()
-        result_text = ""
-        for row in myresult:
-            result_text += f"idCarrera: {row[0]}, nombre: {row[1]}\n"
-        return result_text
+        return myresult
     
     def select_by_id(self, id):
         mycursor = self.__connection.cursor()
