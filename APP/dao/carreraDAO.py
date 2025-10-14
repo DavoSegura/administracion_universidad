@@ -17,12 +17,22 @@ class CarreraDao:
         mycursor = self.__connection.cursor()
         mycursor.execute("SELECT idCarrera, nombre FROM carreras")
         myresult = mycursor.fetchall()
-        return myresult
+        carreras = []
+        for row in myresult:
+            carrera = Carrera(row[1], row[0])
+            carreras.append(carrera)
+        return carreras
     
     def select_by_id(self, id):
         mycursor = self.__connection.cursor()
         mycursor.execute(("SELECT idCarrera, nombre FROM carreras WHERE idCarrera = %s"), (id,))
-        return mycursor.fetchone()
+        row = mycursor.fetchone()
+    
+        if row:
+            carrera = Carrera(idCarrera=row[0], nombre=row[1])
+            return carrera
+        else:
+            return None
 
     def update(self, carrera):
         mycursor = self.__connection.cursor()
@@ -32,7 +42,8 @@ class CarreraDao:
         self.__connection.commit()
         return (f"Se han modificado {mycursor.rowcount} valores")
 
-    def delete_by_id(self, id):
+    def delete_by_id(self, carrera):
+        id = carrera.GetIdCarrera()
         mycursor = self.__connection.cursor()
         sql = "DELETE FROM carreras WHERE idCarrera = %s"
         values = (id,)

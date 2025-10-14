@@ -19,12 +19,22 @@ service = CarreraService()
 @app.route("/getAllCarreras", methods=["GET"])
 def get_all_carreras():
     data = service.GetCarreras()
-    return jsonify({"carreras": data})
+    carrerasJson = [
+        {"idCarrera": c.GetIdCarrera(), "nombre": c.GetNombre()} for c in data
+    ]
+    return jsonify({"carreras": carrerasJson})
 
 @app.route("/getCarrerasById/<int:idCarrera>", methods=["GET"])
 def get_carrera_by_id(idCarrera):
     result = service.GetCarreraById(idCarrera)
-    return jsonify({"resultado": result})
+    if result is None:
+        return jsonify({"error": f"No se encontró la carrera con ID {idCarrera}."})
+
+    carreraJson = {
+        "idCarrera": result.GetIdCarrera(),
+        "nombre": result.GetNombre()
+    }
+    return jsonify({"resultado": carreraJson})
 
 @app.route("/createCarrera/", methods=["POST"])
 def create_carrera():
@@ -146,8 +156,17 @@ def main_web():
       try {
         const res = await fetch(base + '/getAllCarreras');
         const json = await res.json();
-        // tu API devuelve { "carreras": "<texto>" } según la implementación actual
-        show('allResult', json.carreras ?? json);
+
+        if (Array.isArray(json.carreras)) {
+          let html = '<ul>';
+          for (const c of json.carreras) {
+            html += `<li><strong>ID:</strong> ${c.idCarrera} - <strong>Nombre:</strong> ${c.nombre}</li>`;
+          }
+          html += '</ul>';
+          el('allResult').innerHTML = html;
+        } else {
+          show('allResult', JSON.stringify(json, null, 2));
+        }
       } catch (err) {
         show('allResult','Error: ' + err);
       }
@@ -155,15 +174,26 @@ def main_web():
 
     // Buscar por ID
     el('btnGetById').addEventListener('click', async () => {
-      const id = el('idBuscar').value;
+      const id = el('idBuscar').value.trim();
       if (!id) return show('byIdResult','Escribe un ID válido');
       show('byIdResult','Cargando...');
       try {
         const res = await fetch(base + '/getCarrerasById/' + encodeURIComponent(id));
         const json = await res.json();
-        show('byIdResult', json.resultado ?? json);
+
+        if (json.resultado) {
+          const c = json.resultado;
+          el('byIdResult').innerHTML = `
+            <p><strong>ID:</strong> ${c.idCarrera}</p>
+            <p><strong>Nombre:</strong> ${c.nombre}</p>
+          `;
+        } else if (json.error) {
+          show('byIdResult', json.error);
+        } else {
+          show('byIdResult', JSON.stringify(json, null, 2));
+        }
       } catch (err) {
-        show('byIdResult','Error: ' + err);
+        show('byIdResult', 'Error: ' + err);
       }
     });
 

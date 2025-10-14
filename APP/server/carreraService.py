@@ -14,7 +14,7 @@ class CarreraService:
         carrera = self.__carreraDAO.select_by_id(idCarrera)
         if carrera is None:
             return f"No se encontró la carrera con ID {idCarrera}."
-        return self.__carreraDAO.select_by_id(idCarrera)
+        return carrera
 
     def CreateCarrera(self, carrera):
         return self.__carreraDAO.insert(carrera)
@@ -22,5 +22,5 @@ class CarreraService:
     def UpdateCarrera(self, carrera):
         return self.__carreraDAO.update(carrera)
 
-    def DeleteCarrera(self, idCarrera):
-        return self.__carreraDAO.delete_by_id(idCarrera)   
+    def DeleteCarrera(self, carrera):
+        return self.__carreraDAO.delete_by_id(carrera)   
